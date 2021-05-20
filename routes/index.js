@@ -1,7 +1,8 @@
 const router = require("express").Router()
+const wikiRouter = require('./wiki');
+const userRouter = require('./user');
 
-router.get("/", (req, res, next) => {
-    res.render("index", {hola:"el pepe"})
-})
 
-module.exports = router
+router.use('/wiki', wikiRouter);
+
+module.exports = router;

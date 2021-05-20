@@ -1,26 +1,36 @@
-const S = require("sequelize");
-const db = require(".");
+const Sequelize = require("sequelize");
+const db = require("../db");
 
-class Page extends S.Model {}
+class Page extends Sequelize.Model {}
 
 Page.init(
-  {
-    title: {
-      type: S.STRING,
-      allowNull: false,
+    {
+        title: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        urlTitle: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        content: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        status: {
+            type: Sequelize.ENUM("open", "closed"),
+        },
+        route: {
+            type: Sequelize.VIRTUAL,
+            get() {
+                return `/wiki/${this.getDataValue(urlTitle)}`;
+            },
+        },
     },
-    url: {
-      type: S.STRING,
-    },
-    content: {
-      type: S.STRING,
-    },
-    status: {
-      type: S.BOOLEAN,
-    },
-  },
-  { db, modelName: "pages" }
+    {
+        sequelize: db,
+        modelName: "page",
+    }
 );
 
 module.exports = Page;
-

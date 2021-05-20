@@ -1,25 +1,27 @@
-const S = require("sequelize");
-const db = require(".");
+const Sequelize = require("sequelize");
+const db = require("../db");
 
-class Page extends S.Model {}
+class User extends Sequelize.Model {}
 
-Page.init(
-  {
-    title: {
-      type: S.STRING,
-      allowNull: false,
+
+User.init(
+    {
+        firstName: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        email: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            validate: {
+                isEmail: true
+            },
+        },
     },
-    url: {
-      type: S.STRING,
-    },
-    content: {
-      type: S.STRING,
-    },
-    status: {
-      type: S.BOOLEAN,
-    },
-  },
-  { db, modelName: "pages" }
+    {
+        sequelize: db,
+        modelName: "user",
+    }
 );
 
-module.exports = Page;
+module.exports = User;
