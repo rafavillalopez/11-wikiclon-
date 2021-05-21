@@ -1,7 +1,9 @@
-const Page = require('./Page');
-const User = require('./User');
-const db = require('../db');
+const Page = require("./Page");
+const User = require("./User");
+const Tag = require("./Tag");
 
-module.exports = {Page, 
-                 User,
-                db};
+Page.belongsTo(User, { as: "author" });
+Page.belongsToMany(Tag, { through: "PageTags" });
+Tag.belongsToMany(Page, { through: "PageTags" });
+
+module.exports = { Page, User, Tag };

@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const app = express();
 const nunjucks = require("nunjucks");
 const routes = require("./routes");
-const database = require("./models");
+const db = require("./db");
 
 // MORGAN
 app.use(morgan("tiny"));
@@ -25,7 +25,7 @@ app.use("/", routes);
 const port = 3000;
 const url = "http://localhost:3000";
 
-database.db.sync({ force: true })
+db.sync({ force: false })
   .then(() => {
     app.listen(port, () => {
       console.log("server creado y escuchando en " + url);

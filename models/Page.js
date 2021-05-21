@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
-const { options } = require("./User");
 
 class Page extends Sequelize.Model {}
 
@@ -24,7 +23,7 @@ Page.init(
     route: {
       type: Sequelize.VIRTUAL,
       get() {
-        return `/wiki/${this.getDataValue(this.urlTitle)}`;
+        return `/wiki/${this.getDataValue("urlTitle")}`;
       },
     },
   },
@@ -43,8 +42,10 @@ function generateUrlTitle(title) {
   }
 }
 
-Page.addHook("beforeValidate", (page, options)=>{
-  page.urlTitle = generateUrlTitle(page.title)
-})
+Page.addHook("beforeValidate", async (page, options) => {
+  const url = await generateUrlTitle(page.title);
+  page.urlTitle = url;
+});
 
 module.exports = Page;
+

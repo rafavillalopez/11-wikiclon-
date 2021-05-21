@@ -3,25 +3,24 @@ const db = require("../db");
 
 class User extends Sequelize.Model {}
 
-
 User.init(
-    {
-        firstName: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        email: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            validate: {
-                isEmail: true
-            },
-        },
+  {
+    firstName: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
-    {
-        sequelize: db,
-        modelName: "user",
-    }
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: true,
+      },
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "user",
+  }
 );
 
 module.exports = User;
