@@ -4,6 +4,7 @@ const app = express();
 const nunjucks = require("nunjucks");
 const routes = require("./routes");
 const db = require("./db");
+require("./models/asociations");
 
 // MORGAN
 app.use(morgan("tiny"));
@@ -23,12 +24,16 @@ app.engine("html", nunjucks.render);
 app.use("/", routes);
 
 const port = 3000;
-const url = "http://localhost:3000";
 
-db.sync({ force: false })
-  .then(() => {
-    app.listen(port, () => {
-      console.log("server creado y escuchando en " + url);
-    });
-  })
-  .catch((err) => console.log(err));
+// RUN SERVER
+app.listen(port, async () => {
+  try {
+    console.log(`La app ha arrancado en http://localhost:${port}`);
+    // Conectase a la base de datos
+    // Force true: DROP TABLES
+    await db.sync({ force: true });
+    console.log("Nos hemos conectado a la base de datos");
+  } catch (error) {
+    console.log("Se ha producido un error", error);
+  }
+});

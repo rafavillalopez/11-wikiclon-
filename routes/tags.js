@@ -1,4 +1,5 @@
 const { Page, User, Tag, PageTags } = require("../models");
+const Promise = require("bluebird");
 
 const router = require("express").Router();
 
@@ -9,39 +10,34 @@ router.get("/:tag", async (req, res, next) => {
     },
   });
   const pages = await tag.getPages();
+  
+  res.render("taglist", { pages, tag });
 });
 
-router.post("/:url", async (req, res, next) => {
+router.post("/:urlTitle", async (req, res, next) => {
+  const { urlTitle } = req.params;
   try {
     const tags = req.body.tags.split(" ");
-    const tagsArr = tags.map((tag) => {
-      Tag.findOrCreate({
+
+    let tagsAded = await Promise.map(tags, (name) => {
+      return Tag.findOrCreate({
         where: {
-          name: tag,
+          name,
         },
       });
     });
-
-    const adedTags = await Promise.all(tagsArr);
-
     const page = await Page.findOne({
       where: {
-        urlTitle: req.params.url,
+        urlTitle,
       },
     });
+    tagsAded = tagsAded.map((tagBool) => tagBool[0]);
 
-    const aded = await page.addTag(adedTags[0])
-    console.log(aded)
-    /* const tagsToPage = adedTags.map((tag) => {
-      page.addTag(tag);
-    });
-
-    await Promise.all(tagsToPage); */
+    await page.addTags(tagsAded);
 
     res.redirect(page.route);
-
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 });
 

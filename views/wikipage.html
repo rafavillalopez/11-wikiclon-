@@ -5,15 +5,32 @@
   >
 </h3>
 <h4>by <a href="/users/{{user.id}}">{{user.firstName}}</a></h4>
-<div>PLACEHOLDER TAG LIST</div>
-<hr />
+<div>
+  <h4>Tags</h4>
+  <ul class="list-unstyled">
+    <ul>
+      {% for tag in tags %}
 
+      <li><a href="/search/{{tag.name}}">{{tag.name}}</a></li>
+
+      {% endfor %}
+    </ul>
+  </ul>
+</div>
+<hr />
 <div><a href="/users/{{user.id}}">{{user.firstName}}</a></div>
 <div class="page-body">{{page.content}}</div>
 <hr />
 <form method="POST" action="/search/{{page.urlTitle}}">
-  <label for="tags" class="col-sm-4 control-label">Add Tags <small>(separalos con espacios " ")</small></label>
-  <input name="tags" type="text" class="form-control" placeholder="tag1 tag2 tag3"/>
+  <label for="tags" class="col-sm-4 control-label"
+    >Add Tags <small>(separalos con espacios " ")</small></label
+  >
+  <input
+    name="tags"
+    type="text"
+    class="form-control"
+    placeholder="tag1 tag2 tag3"
+  />
   <button type="submit" class="btn btn-primary">submit</button>
 </form>
 <hr />

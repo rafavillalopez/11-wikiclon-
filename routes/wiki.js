@@ -49,7 +49,9 @@ router.get("/:urlTitle", async (req, res, next) => {
         id: page.authorId,
       },
     });
-    res.render("wikipage", { page, user });
+    const tags = await page.getTags();
+
+    res.render("wikipage", { page, user, tags });
   } catch (err) {
     next(err);
   }
