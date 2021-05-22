@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block content %}
 <h3>
   {{page.title}}<small>
-    (<a href="{{page.urlTitle}}/similar">Similar</a>)</small
+    (<a href="/search/{{page.urlTitle}}/similar">Similar</a>)</small
   >
 </h3>
 <h4>by <a href="/users/{{user.id}}">{{user.firstName}}</a></h4>

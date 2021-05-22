@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const wikiRouter = require("./wiki");
 const userRouter = require("./user");
-const tagsRoutes = require("./tags")
+const tagsRoutes = require("./tags");
 const { Page } = require("../models");
 
 router.use("/wiki", wikiRouter);
@@ -17,4 +17,3 @@ router.use("/", async (req, res, next) => {
 });
 
 module.exports = router;
-

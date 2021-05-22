@@ -31,7 +31,7 @@ app.listen(port, async () => {
     console.log(`La app ha arrancado en http://localhost:${port}`);
     // Conectase a la base de datos
     // Force true: DROP TABLES
-    await db.sync({ force: true });
+    await db.sync({ force: false });
     console.log("Nos hemos conectado a la base de datos");
   } catch (error) {
     console.log("Se ha producido un error", error);

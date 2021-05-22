@@ -1,13 +1,16 @@
 {% extends "layout.html" %} {% block content %}
-<h3>Pages with tag: "{{tag.name}}"</h3>
-<hr />
-<ul class="list-unstyled">
-  <ul>
-    {% for page in pages %}
-    <h4>
-      <li><a href="/wiki/{{page.urlTitle}}">{{page.title}}</a></li>
-    </h4>
-    {% endfor %}
+<div>
+  <h2>Tags</h2>
+  <ul class="list-unstyled">
+    <ul>
+      {% for tag in tags %}
+
+      <li>
+        <h4><a href="/search/{{tag.name}}">{{tag.name}}</a></h4>
+      </li>
+
+      {% endfor %}
+    </ul>
   </ul>
-</ul>
+</div>
 {% endblock %}
