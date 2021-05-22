@@ -1,6 +1,4 @@
-const models = require("../models");
-const Page = models.Page;
-const User = models.User;
+const { Page, User } = require("../models");
 const router = require("express").Router();
 
 router.get("/", function (req, res, next) {
@@ -33,6 +31,7 @@ router.post("/", async (req, res, next) => {
 });
 
 router.get("/add", (req, res, next) => {
+  if (err) next(err);
   res.render("addpage");
 });
 

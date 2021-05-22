@@ -1,4 +1,4 @@
-const { Page, User, Tag } = require("../models");
+const { Page, Tag } = require("../models");
 const Promise = require("bluebird");
 
 const router = require("express").Router();
@@ -12,14 +12,17 @@ router.get("/", async (req, res, next) => {
   }
 });
 router.get("/:tag", async (req, res, next) => {
-  const tag = await Tag.findOne({
-    where: {
-      name: req.params.tag,
-    },
-  });
-  const pages = await tag.getPages();
-
-  res.render("listofpages", { pages, tag });
+  try {
+    const tag = await Tag.findOne({
+      where: {
+        name: req.params.tag,
+      },
+    });
+    const pages = await tag.getPages();
+    res.render("listofpages", { pages, tag });
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.post("/:urlTitle", async (req, res, next) => {
@@ -64,10 +67,11 @@ router.get("/:urlTitle/similar", async (req, res, next) => {
 
     let pagesForTag = await Promise.map(tags, (tag) => tag.getPages());
 
-    let pagesIds = [];
+    const pagesIds = [];
 
     pagesForTag = pagesForTag.flat().forEach((pageOfTag) => {
       let id = pageOfTag.dataValues.id;
+
       if (!(pagesIds.includes(id) || id === page.dataValues.id))
         pagesIds.push(id);
     });

@@ -11,8 +11,8 @@ router.use("/", async (req, res, next) => {
   try {
     const pages = await Page.findAll();
     res.render("index", { pages: pages });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    res.render("error", { message: error.message, error });
   }
 });
 
