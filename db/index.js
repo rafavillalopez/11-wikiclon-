@@ -3,6 +3,5 @@ const db = new Sequelize("postgres://rafavillalopez:rafita981@localhost:5432/wik
     logging: false
 });
 
-
 module.exports = db;
 

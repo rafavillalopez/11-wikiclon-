@@ -1,16 +1,16 @@
-const Sequelize = require("sequelize");
+const S = require("sequelize");
 const db = require("../db");
 
-class User extends Sequelize.Model {}
+class User extends S.Model {}
 
 User.init(
   {
     firstName: {
-      type: Sequelize.STRING,
+      type: S.STRING,
       allowNull: false,
     },
     email: {
-      type: Sequelize.STRING,
+      type: S.STRING,
       allowNull: false,
       validate: {
         isEmail: true,

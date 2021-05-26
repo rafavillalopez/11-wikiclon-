@@ -1,27 +1,27 @@
-const Sequelize = require("sequelize");
+const S = require("sequelize");
 const db = require("../db");
 
-class Page extends Sequelize.Model {}
+class Page extends S.Model {}
 
 Page.init(
   {
     title: {
-      type: Sequelize.STRING,
+      type: S.STRING,
       allowNull: false,
     },
     urlTitle: {
-      type: Sequelize.STRING,
+      type: S.STRING,
       allowNull: false,
     },
     content: {
-      type: Sequelize.STRING,
+      type: S.TEXT,
       allowNull: false,
     },
     status: {
-      type: Sequelize.ENUM("open", "closed"),
+      type: S.ENUM("open", "closed"),
     },
     route: {
-      type: Sequelize.VIRTUAL,
+      type: S.VIRTUAL,
       get() {
         return `/wiki/${this.getDataValue("urlTitle")}`;
       },
@@ -42,10 +42,9 @@ function generateUrlTitle(title) {
   }
 }
 
-Page.addHook("beforeValidate", async (page, options) => {
-  const url = await generateUrlTitle(page.title);
+Page.addHook("beforeValidate", (page, options) => {
+  const url = generateUrlTitle(page.title);
   page.urlTitle = url;
 });
 
 module.exports = Page;
-

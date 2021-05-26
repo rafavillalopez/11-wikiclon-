@@ -2,19 +2,26 @@ const { Page, User } = require("../models");
 const router = require("express").Router();
 
 router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const userP = User.findByPk(req.params.id);
+    const userP = User.findByPk(id);
+
     const pagesP = Page.findAll({
       where: {
-        authorId: req.params.id,
+        authorId: id,
       },
     });
+
     const [pages, user] = await Promise.all([pagesP, userP]);
 
-    res.render("singleuserpages", {
-      pages,
-      user,
-    });
+    if (user) {
+      res.render("singleuserpages", {
+        pages,
+        user,
+      });
+    } else {
+      throw new TypeError(400 + " Bad request. User not found");
+    }
   } catch (err) {
     next(err);
   }

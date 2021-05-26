@@ -21,20 +21,11 @@
 <div><a href="/users/{{user.id}}">{{user.firstName}}</a></div>
 <div class="page-body">{{page.content}}</div>
 <hr />
-<form method="POST" action="/search/{{page.urlTitle}}">
-  <label for="tags" class="col-sm-4 control-label"
-    >Add Tags <small>(separalos con espacios " ")</small></label
-  >
-  <input
-    name="tags"
-    type="text"
-    class="form-control"
-    placeholder="tag1 tag2 tag3"
-  />
-  <button type="submit" class="btn btn-primary">submit</button>
-</form>
-<hr />
-<a href="/wiki/{{page.urlTitle}}/edit" class="btn btn-primary">edit this page</a>
-<a href="/wiki/{{page.urlTitle}}/delete" class="btn btn-danger">delete this page</a>
+<a href="/wiki/{{page.urlTitle}}/edit" class="btn btn-primary"
+  >edit this page</a
+>
+<a href="/wiki/{{page.urlTitle}}/delete" class="btn btn-danger"
+  >delete this page</a
+>
 
 {% endblock %}

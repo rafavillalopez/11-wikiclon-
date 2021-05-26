@@ -5,8 +5,11 @@ const router = require("express").Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const tags = await Tag.findAll();
-    res.render("taglist", { tags });
+    if (req.query.tag) {
+      res.redirect(`/search/${req.query.tag}`);
+    } else {
+      res.render("taglist");
+    }
   } catch (err) {
     next(err);
   }
@@ -20,34 +23,6 @@ router.get("/:tag", async (req, res, next) => {
     });
     const pages = await tag.getPages();
     res.render("listofpages", { pages, tag });
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/:urlTitle", async (req, res, next) => {
-  const { urlTitle } = req.params;
-  try {
-    const tags = req.body.tags.split(" ");
-
-    let tagsAded = await Promise.map(tags, (name) => {
-      return Tag.findOrCreate({
-        where: {
-          name,
-        },
-      });
-    });
-
-    const page = await Page.findOne({
-      where: {
-        urlTitle,
-      },
-    });
-    tagsAded = tagsAded.map((tagBool) => tagBool[0]);
-
-    await page.addTags(tagsAded);
-
-    res.redirect(page.route);
   } catch (err) {
     next(err);
   }

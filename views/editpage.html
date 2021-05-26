@@ -1,47 +1,39 @@
 {% extends "layout.html" %} {% block content %}
 <h3>Add a Page</h3>
 <hr />
-<form method="POST" action="/wiki/">
-  <div class="form-group">
-    <label for="name" class="col-sm-2 control-label">Nombre</label>
-    <div class="col-sm-10">
-      <input name="name" type="text" class="form-control" />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="email" class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-10">
-      <input name="email" type="email" class="form-control" />
-    </div>
-  </div>
-
+<form method="POST" action="{{page.route}}/edit">
   <div class="form-group">
     <label for="title" class="col-sm-2 control-label">Page Title</label>
     <div class="col-sm-10">
-      <input name="title" type="text" class="form-control" />
+      <input
+        name="title"
+        type="text"
+        class="form-control"
+        value="{{page.title}}"
+      />
     </div>
   </div>
 
-  <div class="form-group">
+  <div>
     <label for="contenido" class="col-sm-2 control-label">Contenido</label>
     <div class="col-sm-10">
-      <textarea name="content" id="contenido" cols="100" rows="15"></textarea>
+      <textarea name="content" id="contenido" cols="100" rows="20">
+{{page.content}}</textarea
+      >
     </div>
   </div>
 
-  <div class="form-group">
+  <div>
     <label>Estado de la Pagina:</label>
-    <div class="opcion macho">
+    <div class="opcion open">
       <label>Open</label>
       <input name="status" type="radio" value="open" checked/>
     </div>
-    <div class="opcion hembra">
+    <div class="opcion closed">
       <label>Close</label>
       <input name="status" type="radio" value="closed" />
     </div>
   </div>
-
   <div class="form-group">
     <label for="tags" class="col-sm-2 control-label">Tags</label>
     <div class="col-sm-10">
@@ -49,11 +41,10 @@
         name="tags"
         type="text"
         class="form-control"
-        placeholder="tag1 tag2 tag3"
+        value="{{tags}}"
       />
     </div>
   </div>
-
   <div class="col-sm-offset-2 col-sm-10">
     <button type="submit" class="btn btn-primary">submit</button>
   </div>
